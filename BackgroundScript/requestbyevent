@@ -1,0 +1,21 @@
+// use this script as an event script. To run this script create an event that runs on every X minutes
+
+var
+  insertItemID, phpUrl: string;
+  item: IPlaylistItem;
+
+const
+  sPHPRootUrl = 'https://uploadurl/request/'; //change this url as the correct url on your server
+
+begin
+  phpUrl := sPHPRootUrl + '/api.php/getrequest';
+  insertItemID := HTTPGet(phpUrl);
+
+  if insertItemID <> '' then begin
+    item := Database(0).CreatePlaylistItem(insertItemID);
+    CurrentPlaylist.Insert(CurrentPlaylist.GetNextIndex, item);
+    SystemLog('Request toegevoegd aan playlist: ' + insertItemID);
+  end else begin
+    SystemLog('Geen request gevonden.');
+  end;
+end.
