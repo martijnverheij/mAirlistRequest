@@ -131,8 +131,9 @@ if(isset($_POST['submit']))
     // check there are no errors
     	if($_FILES['csv']['error'] == 0){
         
-        	$name = $_FILES['csv']['tmp_name'];              
-			$dbname = 'mAirlistRequest.db';
+        	$name = $_FILES['csv']['tmp_name'];
+			$dbname = realpath(__DIR__ . '/../mAirlistRequest.db'); // updated this rule because the script is expected the DB in the root of admin. And the first creation of the database is in the root folder.
+			// $dbname = 'mAirlistRequest.db';
 		
 			import_csv_to_sqlite($name,$dbname);
 		}
